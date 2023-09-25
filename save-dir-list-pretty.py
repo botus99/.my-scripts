@@ -45,6 +45,8 @@ def save_directory_listing(directory, filename):
         file.writelines('\n'.join(listing))
 
 directory = os.getcwd()  # Get the current working directory path
-filename = "DirListing-pretty.txt"
+filename = "DirContent-pretty.txt"
 
 save_directory_listing(directory, filename)
+
+print("Directory contents have been successfully written to DirContent-pretty.txt file.")
