@@ -1,4 +1,4 @@
-# .myscripts
+# .my-scripts
 These scripts help with optimizing media archival, updating applications, and generating basic text.  👀
 
 ## 📖 Description
