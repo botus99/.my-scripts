@@ -11,7 +11,7 @@ def search_interlaced_videos(target_folder):
     for root, dirs, files in os.walk(current_directory):
         for file in files:
             file_path = os.path.join(root, file)
-            if file.endswith((".avi", ".mp4", ".mkv")):
+            if file.endswith((".avi", ".mpg", ".mpeg", ".mp4", ".mkv")):
                 if is_interlaced(file_path):
                     destination_path = os.path.join(target_folder, file)
                     shutil.move(file_path, destination_path)
