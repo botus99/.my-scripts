@@ -34,7 +34,8 @@ for filename in os.listdir():
             "-cq", "27",             # Set constant quality value to 27 (roughly 1.5mbps-2.5mbps)
             # "-vf", "bwdif",        # Uncomment for frame-doubling bob de-interlacing
             # "-vf", "yadif=1",      # Uncomment for frame-doubling yadif de-interlacing
-                                     # some common video filters: hqdn3d, deblock, deband
+            # "-vf", "fieldmatch,decimate,fps=24000/1001"    # Uncomment for converting 29.97fps (TV) to 23.976fps (film) 
+                                     # some common video filters: hqdn3d, deblock, deband (add after deinterlacing if using these)
             "-movflags", "+faststart",  # Enable faststart for quicker streaming
             output_file
 
