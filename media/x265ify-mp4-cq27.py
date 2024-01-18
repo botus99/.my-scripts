@@ -1,10 +1,14 @@
 import os
 import subprocess
 
+# Define the list of video file extensions to consider
 video_extensions = (".wmv", ".avi", ".mpg", ".mpeg", ".mkv", ".m4v", ".flv", ".mov", ".webm")
 
+# Iterate through files in the current directory
 for filename in os.listdir():
+    # Check if the file has a video extension
     if filename.lower().endswith(video_extensions):
+        # Set input and output file names
         input_file = filename
         output_file = f"{os.path.splitext(filename)[0]}[x265]-NoGRP.mp4"
 
@@ -40,7 +44,8 @@ for filename in os.listdir():
             output_file
 
         ]
-
+        # Run the FFmpeg command using subprocess
         subprocess.run(x265ify, shell=True)
 
+# Keep the window open until user presses Enter after script execution
 input("Press Enter to continue...")
