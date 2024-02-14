@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Stop and remove the existing Portainer containerdocker stop portainer 
+# Stop and remove the existing Portainer container
+docker stop portainer 
 docker rm portainer 
 
 # Pull the latest Portainer CE image
