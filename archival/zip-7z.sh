@@ -1,4 +1,8 @@
 #!/bin/bash
+# This script will 
+#    - Extract all zip files in the current folder to a temp folder
+#    - Compress the extracted files in the temp folder
+#    - Delete the temp folder
 
 outputPath=$(pwd)
 
