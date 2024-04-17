@@ -8,7 +8,7 @@ COLOR_RESET = '\033[0m'
 
 def process_png_file(png_file):
     # Construct the command to run optipng
-    command = ['optipng', png_file]
+    command = ['oxipng', png_file]
 
     # Run the command using subprocess
     try:
