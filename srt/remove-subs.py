@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+import os
+
 # Function to remove subtitles from movie files
 def remove_subtitles(input_folder):
     for filename in os.listdir(input_folder):
