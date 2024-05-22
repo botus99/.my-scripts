@@ -12,4 +12,4 @@ You can clone the repository to your machine using the following command:
 git clone https://github.com/botus99/.myscripts.git
 ```
 The scripts are mostly meant to run within the current working directory. Copy/pasting these scripts as needed should do the trick! 
-Keep in mind that some scripts may require specific dependencies or configurations, specifically python, ffmpeg, jpegoptim, optipng, mediainfo, and mkvmerge. Assuming your apps are installed and shims are working, these scripts should require zero setup.
+Keep in mind that some scripts may require specific dependencies or configurations, specifically python, ffmpeg, jpegoptim, oxipng, mediainfo, and mkvmerge. Assuming your apps are installed and shims are working, these scripts should require zero setup.
