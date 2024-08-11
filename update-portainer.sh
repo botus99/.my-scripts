@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Stop and remove the existing Portainer container
 docker stop portainer 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Function to recursively create zip files from bin files
 function create_zip_recursive {
