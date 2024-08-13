@@ -3,22 +3,23 @@
 # Set some variables
 RETROARCHSYSTEMFOLDER="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/system"
 PCSX2BIOSFOLDER="$HOME/.var/app/net.pcsx2.PCSX2/config/PCSX2/bios"
+RYUNJINXFIRMMWAREFOLDER="$HOME/.var/app/org.ryujinx.Ryujinx/config/Ryujinx/firmware"
+RYUNJINXPRODKEYSFOLDER="$HOME/.var/app/org.ryujinx.Ryujinx/config/Ryujinx/system"
 
 # Function to display the main menu
 show_menu() {
     local choice
     clear
-    echo "Select a console:"
+    echo "Which BIOS files do you need?"
     echo "1) Arcade"
-    echo "2) Nintendo - SNES"
-    echo "3) Nintendo - Gameboy"
-    echo "4) Nintendo - Gameboy Color"
-    echo "5) Nintendo - Gamecube/Wii"
-    echo "6) Sega - Genesis/MS/GG/CD/32x"
-    echo "7) Sega - Saturn"
-    echo "8) Sega - Dreamcast / Arcade Naomi"
-    echo "9) Sony PS1/PSP"
-    echo "ps2) Sony Playstation 2"
+    echo "2) Nintendo - SNES / Gameboy / Gameboy Color"
+    echo "3) Nintendo - GameCube/Wii"
+    echo "4) Nintendo - Switch"
+    echo "5) Sega - Genesis/MS/GG/CD/32x"
+    echo "6) Sega - Saturn"
+    echo "7) Sega - Dreamcast / Arcade Naomi"
+    echo "8) Sony PS1/PSP"
+    echo "9) Sony Playstation 2"
     echo "x) Exit"
     read -p "Choose your fate: " choice
     return $choice
@@ -30,6 +31,7 @@ download_bios() {
     case "$console" in
         1)
             # download Arcade BIOS
+            mkdir -p $RETROARCHSYSTEMFOLDER
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/airlbios.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/awbios.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/bubsys.zip
@@ -54,10 +56,16 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/hod2bios.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi2.zip
-            echo "Downloaded Arcade BIOS files"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                                Arcade systems                               #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
         2)
-            # download Nintendo - SNES BIOS
+            # download 90's Nintendo BIOS files
+            mkdir -p $RETROARCHSYSTEMFOLDER
+            ### SNES BIOS
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/cx4.data.rom
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/dsp1.data.rom
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/dsp1.program.rom
@@ -75,30 +83,51 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/st011.program.rom
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/st018.data.rom
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/st018.program.rom
-            echo "Downloaded BIOS files for Super Nintendo"
-            ;;
-        3)
-            # download Nintendo - GB BIOS download links
+            ### Gameboy
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Gameboy/dmg_boot.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Gameboy/gb_bios.bin
-            echo "Downloaded BIOS files for Nintendo Gameboy"
-            ;;
-        4)
-            # download Nintendo - GBC BIOS files
+            ### Gameboy Color
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Gameboy%20Color/cgb_boot.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20Gameboy%20Color/gbc_bios.bin
-            echo "Downloaded BIOS files for Nintendo Gameboy Color"
+            echo -e "\033[1;31mBIOS files for Super Nintendo, Nintendo Gameboy, and Gameboy Color successfully installed \n\033[0m"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#             Super Nintendo, Nintendo Gameboy, and Gameboy Color             #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
-        5)
-            # download Nintendo - Gamecube / Wii BIOS files
+        3)
+            # download Nintendo - GameCube / Wii BIOS files
             mkdir -p $RETROARCHSYSTEMFOLDER/dolphin-emu/
             wget -nc -P $RETROARCHSYSTEMFOLDER/dolphin-emu/ https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20GameCube/gc-dvd-20020823.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER/dolphin-emu/ https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20GameCube/gc-ntsc-12.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER/dolphin-emu/ https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20GameCube/gc-pal-12.bin
-            echo "Downloaded BIOS files for Nintendo Gamecube"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                           Nintendo GameCube / Wii                           #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
-        6)
+        4)
+            # download Nintendo - Switch files
+            mkdir -p $RYUNJINXFIRMMWAREFOLDER
+            mkdir -p $RYUNJINXPRODKEYSFOLDER
+            #aria2c -x 5 --out $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip "https://archive.org/download/firmware-keys-17.0.1/Firmware.17.0.1.zip"
+            #aria2c -x 5 --out $RYUNJINXPRODKEYSFOLDER/Keys_17.0.1.zip "https://archive.org/download/firmware-keys-17.0.1/Keys_17.0.1.zip"
+            wget -nc -P $RYUNJINXFIRMMWAREFOLDER https://archive.org/download/firmware-keys-17.0.1/Firmware.17.0.1.zip
+            wget -nc --output-document $RYUNJINXPRODKEYSFOLDER/title.keys https://archive.org/download/firmware-keys-17.0.1/Keys_17.0.1.zip/Keys%2017.0.1%2Ftitle.keys
+            wget -nc --output-document $RYUNJINXPRODKEYSFOLDER/prod.keys https://archive.org/download/firmware-keys-17.0.1/Keys_17.0.1.zip/Keys%2017.0.1%2Fprod.keys
+            unzip $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip -d $RYUNJINXFIRMMWAREFOLDER
+            rm $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                               Nintendo Switch                               #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
+            ;;
+        5)
             # download old school SEGA  BIOSes download links
+            mkdir -p $RETROARCHSYSTEMFOLDER
             #### Game Gear
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Game%20Gear/bios.gg
             #### Master System
@@ -117,10 +146,15 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Mega%20CD%20-%20Sega%20CD/bios_CD_E.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Mega%20CD%20-%20Sega%20CD/bios_CD_J.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Mega%20CD%20-%20Sega%20CD/bios_CD_U.bin
-            echo "Downloaded old school SEGA BIOS files"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                           old school Sega consoles                          #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
-        7)
+        6)
             # download Sega - Saturn BIOS download links
+            mkdir -p $RETROARCHSYSTEMFOLDER
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/hisaturn.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/mpr-17933.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/mpr-18100.bin
@@ -132,9 +166,13 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/sega_100a.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/sega_101.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/vsaturn.bin
-            echo "Downloaded BIOS files for Sega Saturn"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                                 Sega Saturn                                 #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
-        8)
+        7)
             # download Sega - Dreamcast BIOS files
             mkdir -p $RETROARCHSYSTEMFOLDER/dc/
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Dreamcast/dc_boot.bin
@@ -147,25 +185,38 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/hod2bios.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi2.zip
-            echo "Downloaded BIOS files for Sega Dreamcast"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                                Sega Dreamcast                               #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
-        9)
+        8)
             # download Sony PS1/PSP BIOS files
+            mkdir -p $RETROARCHSYSTEMFOLDER
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sony%20-%20PlayStation/scph5500.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sony%20-%20PlayStation/scph5501.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sony%20-%20PlayStation/scph5502.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sony%20-%20PlayStation%20Portable/ppge_atlas.zim
-            echo "Downloaded BIOS files for Sony Playstation and PSP"
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                           Sony Playstation and PSP                          #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
             ;;
-        ps2)
-        	# download Sony Playstation 2 BIOS files
+        9)
+            # download Sony Playstation 2 BIOS files
             mkdir -p $PCSX2BIOSFOLDER
             wget -nc -P $PCSX2BIOSFOLDER https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/pcsx2/bios/ps2-0250j-20100415.bin
             wget -nc -P $PCSX2BIOSFOLDER https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/pcsx2/bios/ps2-0250e-20100415.bin
             wget -nc -P $PCSX2BIOSFOLDER https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/pcsx2/bios/ps2-0230h-20080220.bin
             wget -nc -P $PCSX2BIOSFOLDER https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/pcsx2/bios/ps2-0230a-20080220.bin
-            echo "Downloaded BIOS files for Sony Playstation 2"
-        	;;
+            echo -e "#=============================================================================#"
+            echo -e "#                              BIOS files for...                              #"
+            echo -e "#                              Sony Playstation 2                             #"
+            echo -e "#                            successfully installed                           #"
+            echo -e "#=============================================================================#"
+            ;;
         *)
             echo "You didn't pick one of the selected options, dummy."
             exit 1
@@ -213,10 +264,6 @@ main() {
                 download_bios "9"
                 break
                 ;;
-            ps2)
-            	download_bios "ps2"
-            	break
-            	;;
             x)
                 echo "OK! Exiting..."
                 exit 0
