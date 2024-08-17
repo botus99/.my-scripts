@@ -13,7 +13,7 @@ function create_zip_recursive {
             # If it's a directory, recursively call the function
             create_zip_recursive "$item"
         elif [[ "$item" == *.v64 ]]; then
-            # If it's a bin file, archive with 7z
+            # If it's a v64 file, archive with 7z
             echo "Creating zip file for $item..."
             7z a -tzip -mx=9 "${item%.*}.7z" "$item"
         fi
