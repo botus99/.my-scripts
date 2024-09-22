@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Set some variables
+# Set BIOS directories to default Flatpak locations
 RETROARCHSYSTEMFOLDER="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/system"
 PCSX2BIOSFOLDER="$HOME/.var/app/net.pcsx2.PCSX2/config/PCSX2/bios"
 RYUNJINXFIRMMWAREFOLDER="$HOME/.var/app/org.ryujinx.Ryujinx/config/Ryujinx/firmware"
@@ -13,7 +13,7 @@ show_menu() {
     echo "Which BIOS files do you need?"
     echo "1) Arcade"
     echo "2) Nintendo - SNES / Gameboy / Gameboy Color"
-    echo "3) Nintendo - GameCube/Wii"
+    echo "3) Nintendo - GameCube / Wii"
     echo "4) Nintendo - Switch"
     echo "5) Sega - Genesis/MS/GG/CD/32x"
     echo "6) Sega - Saturn"
