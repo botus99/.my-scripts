@@ -58,8 +58,8 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi2.zip
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
-            echo -e "#                                Arcade systems                               #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                               Arcade systems                                #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         2)
@@ -93,7 +93,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
             echo -e "#             Super Nintendo, Nintendo Gameboy, and Gameboy Color             #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         3)
@@ -105,7 +105,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
             echo -e "#                           Nintendo GameCube / Wii                           #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         4)
@@ -123,7 +123,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
             echo -e "#                               Nintendo Switch                               #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         5)
@@ -149,8 +149,8 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Mega%20CD%20-%20Sega%20CD/bios_CD_U.bin
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
-            echo -e "#                           old school Sega consoles                          #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                          old school Sega consoles                           #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         6)
@@ -169,8 +169,8 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/vsaturn.bin
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
-            echo -e "#                                 Sega Saturn                                 #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                                Sega Saturn                                  #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         7)
@@ -188,8 +188,8 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi2.zip
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
-            echo -e "#                                Sega Dreamcast                               #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                               Sega Dreamcast                                #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         8)
@@ -201,8 +201,8 @@ download_bios() {
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sony%20-%20PlayStation%20Portable/ppge_atlas.zim
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
-            echo -e "#                           Sony Playstation and PSP                          #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                          Sony Playstation and PSP                           #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         9)
@@ -214,8 +214,8 @@ download_bios() {
             wget -nc -P $PCSX2BIOSFOLDER https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/pcsx2/bios/ps2-0230a-20080220.bin
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
-            echo -e "#                              Sony Playstation 2                             #"
-            echo -e "#                            successfully installed                           #"
+            echo -e "#                             Sony Playstation 2                              #"
+            echo -e "#                           successfully installed                            #"
             echo -e "#=============================================================================#"
             ;;
         *)
