@@ -97,7 +97,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             ;;
         3)
-            # download Nintendo - GameCube / Wii BIOS files
+            # download Nintendo GameCube / Wii BIOS files
             mkdir -p $RETROARCHSYSTEMFOLDER/dolphin-emu/
             wget -nc -P $RETROARCHSYSTEMFOLDER/dolphin-emu/ https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20GameCube/gc-dvd-20020823.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER/dolphin-emu/ https://github.com/Abdess/retroarch_system/raw/libretro/Nintendo%20-%20GameCube/gc-ntsc-12.bin
@@ -109,7 +109,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             ;;
         4)
-            # download Nintendo - Switch files
+            # download Nintendo Switch files
             mkdir -p $RYUNJINXFIRMMWAREFOLDER
             mkdir -p $RYUNJINXPRODKEYSFOLDER
             #aria2c -x 5 --out $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip "https://archive.org/download/firmware-keys-17.0.1/Firmware.17.0.1.zip"
@@ -126,7 +126,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             ;;
         5)
-            # download old school SEGA  BIOSes download links
+            # download old school SEGA BIOS files
             mkdir -p $RETROARCHSYSTEMFOLDER
             #### Game Gear
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Game%20Gear/bios.gg
@@ -153,7 +153,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             ;;
         6)
-            # download Sega - Saturn BIOS download links
+            # download Sega Saturn BIOS files
             mkdir -p $RETROARCHSYSTEMFOLDER
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/hisaturn.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Saturn/mpr-17933.bin
@@ -173,7 +173,7 @@ download_bios() {
             echo -e "#=============================================================================#"
             ;;
         7)
-            # download Sega - Dreamcast BIOS files
+            # download Sega Dreamcast BIOS files
             mkdir -p $RETROARCHSYSTEMFOLDER/dc/
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Dreamcast/dc_boot.bin
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/Abdess/retroarch_system/raw/libretro/Sega%20-%20Dreamcast/dc_flash.bin
