@@ -110,15 +110,16 @@ download_bios() {
             ;;
         4)
             # download Nintendo Switch files
+            rm -rf $RYUNJINXFIRMMWAREFOLDER
+            rm $RYUNJINXPRODKEYSFOLDER/prod.keys
+            rm $RYUNJINXPRODKEYSFOLDER/title.keys
             mkdir -p $RYUNJINXFIRMMWAREFOLDER
             mkdir -p $RYUNJINXPRODKEYSFOLDER
-            #aria2c -x 5 --out $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip "https://archive.org/download/firmware-keys-17.0.1/Firmware.17.0.1.zip"
-            #aria2c -x 5 --out $RYUNJINXPRODKEYSFOLDER/Keys_17.0.1.zip "https://archive.org/download/firmware-keys-17.0.1/Keys_17.0.1.zip"
-            wget -nc -P $RYUNJINXFIRMMWAREFOLDER https://archive.org/download/firmware-keys-17.0.1/Firmware.17.0.1.zip
-            wget -nc --output-document $RYUNJINXPRODKEYSFOLDER/title.keys https://archive.org/download/firmware-keys-17.0.1/Keys_17.0.1.zip/Keys%2017.0.1%2Ftitle.keys
-            wget -nc --output-document $RYUNJINXPRODKEYSFOLDER/prod.keys https://archive.org/download/firmware-keys-17.0.1/Keys_17.0.1.zip/Keys%2017.0.1%2Fprod.keys
-            unzip $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip -d $RYUNJINXFIRMMWAREFOLDER
-            rm $RYUNJINXFIRMMWAREFOLDER/Firmware.17.0.1.zip
+            wget -nc -P $RYUNJINXFIRMMWAREFOLDER https://github.com/THZoria/NX_Firmware/releases/download/18.1.0r/Firmware.18.1.0.Rebootless.zip
+            wget -nc --output-document $RYUNJINXPRODKEYSFOLDER/title.keys https://archive.org/download/EmuP_18.1.0_Keys/18.1.0_Keys.zip/title.keys
+            wget -nc --output-document $RYUNJINXPRODKEYSFOLDER/prod.keys https://archive.org/download/EmuP_18.1.0_Keys/18.1.0_Keys.zip/prod.keys
+            unzip $RYUNJINXFIRMMWAREFOLDER/Firmware.18.1.0.Rebootless.zip -d $RYUNJINXFIRMMWAREFOLDER
+            rm $RYUNJINXFIRMMWAREFOLDER/Firmware.18.1.0.Rebootless.zip
             echo -e "#=============================================================================#"
             echo -e "#                              BIOS files for...                              #"
             echo -e "#                               Nintendo Switch                               #"
