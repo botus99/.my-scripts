@@ -15,7 +15,7 @@ show_menu() {
     echo "2) Nintendo - SNES / Gameboy / Gameboy Color"
     echo "3) Nintendo - GameCube / Wii"
     echo "4) Nintendo - Switch"
-    echo "5) Sega - Genesis/MS/GG/CD/32x"
+    echo "5) Sega - Genesis / MS / GG / CD / 32x"
     echo "6) Sega - Saturn"
     echo "7) Sega - Dreamcast / Arcade Naomi"
     echo "8) Sony PS1/PSP"
