@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 import os
 from pydub import AudioSegment
 from pydub.effects import normalize

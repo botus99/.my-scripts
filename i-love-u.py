@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # shamelessly stolen and tweaked from...
 # https://github.com/e-graveyard/i-love-u
