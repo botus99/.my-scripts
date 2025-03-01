@@ -59,7 +59,7 @@ fi
 
 # Check if download was successful
 if [ -f "$OUTPUT_FILE" ]; then
-    echo -e "Latest devoloper version of Brutal Doom downloaded successfully."
+    echo -e "Latest devoloper version of Brutal Doom Community downloaded successfully."
     echo -e "\033[0;31mRip and tear!\e[0m"
 else
     echo -e "\033[0;31mFile not found after download. \e[0mExiting."
