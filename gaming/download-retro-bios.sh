@@ -3,8 +3,8 @@
 # Set BIOS directories to default Flatpak locations
 RETROARCHSYSTEMFOLDER="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/system"
 PCSX2BIOSFOLDER="$HOME/.var/app/net.pcsx2.PCSX2/config/PCSX2/bios"
-RYUNJINXFIRMMWAREFOLDER="$HOME/.var/app/org.ryujinx.Ryujinx/config/Ryujinx/firmware"
-RYUNJINXPRODKEYSFOLDER="$HOME/.var/app/org.ryujinx.Ryujinx/config/Ryujinx/system"
+RYUNJINXFIRMMWAREFOLDER="$HOME/.var/app/io.github.ryubing.Ryujinx/config/Ryujinx/firmware"
+RYUNJINXPRODKEYSFOLDER="$HOME/.var/app/io.github.ryubing.Ryujinx/config/Ryujinx/system"
 
 # Function to display the main menu
 show_menu() {
