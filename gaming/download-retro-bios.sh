@@ -18,7 +18,7 @@ show_menu() {
     echo "5) Sega - Genesis / MS / GG / CD / 32x"
     echo "6) Sega - Saturn"
     echo "7) Sega - Dreamcast / Arcade Naomi"
-    echo "8) Sony PS1/PSP"
+    echo "8) Sony PS1 / PSP"
     echo "9) Sony Playstation 2"
     echo "x) Exit"
     read -p "Choose your fate: " choice
@@ -31,23 +31,23 @@ download_bios() {
     case "$console" in
         1)
             # download Arcade BIOS
-            mkdir -p $RETROARCHSYSTEMFOLDER
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/airlbios.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/awbios.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/bubsys.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/cchip.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/decocass.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/f355bios.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/f355dlx.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/hod2bios.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/isgsm.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/midssio.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/naomi.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/neogeo.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/nmk004.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/pgm.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/skns.zip
-            wget -nc -P $RETROARCHSYSTEMFOLDER https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/ym2608.zip
+            mkdir -p $RETROARCHSYSTEMFOLDER/fbneo/
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/airlbios.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/awbios.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/bubsys.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/cchip.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/decocass.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/f355bios.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/f355dlx.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/hod2bios.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/isgsm.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/midssio.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/naomi.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/neogeo.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/nmk004.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/pgm.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/skns.zip
+            wget -nc -P $RETROARCHSYSTEMFOLDER/fbneo/ https://github.com/Abdess/retroarch_system/raw/libretro/Arcade/ym2608.zip
             mkdir -p $RETROARCHSYSTEMFOLDER/dc/
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/airlbios.zip
             wget -nc -P $RETROARCHSYSTEMFOLDER/dc/ https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/awbios.zip
