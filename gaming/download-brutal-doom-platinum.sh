@@ -43,7 +43,7 @@ echo -e "+----------------------------------------------------------------------
 URL="https://github.com/EmeraldCoasttt/BrutalDoomPlatinum/archive/refs/heads/master.zip"
 
 # Output filename
-OUTPUT_FILE="brutal-doom-platinum-latest.pk3"
+FILENAME="brutal-doom-platinum-latest.pk3"
 
 # Check network connectivity
 if ! ping -c 1 github.com &> /dev/null; then
@@ -52,13 +52,13 @@ if ! ping -c 1 github.com &> /dev/null; then
 fi
 
 # Download the file using wget with a progress bar and continuing a partially downloaded file if applicable
-if ! wget --no-verbose --progress=bar --show-progress --continue --output-document="$OUTPUT_FILE" "$URL"; then
+if ! wget --no-verbose --progress=bar --show-progress --continue --output-document="$FILENAME" "$URL"; then
     echo -e "\033[0;31mDownload failed. \e[0mError: $?"
     exit 1
 fi
 
 # Check if download was successful
-if [ -f "$OUTPUT_FILE" ]; then
+if [ -f "$FILENAME" ]; then
     echo -e "Latest devoloper version of Brutal Doom Platinum downloaded successfully."
     echo -e "\033[0;31mRip and tear!\e[0m"
 else

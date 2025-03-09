@@ -4,41 +4,41 @@
 set -euo pipefail
 
 # Repository for 64bit Linux drivers
-repo="https://download.nvidia.com/XFree86/Linux-x86_64/"
+REPO="https://download.nvidia.com/XFree86/Linux-x86_64/"
 
 # Download the index page content
-curl -s "$repo" | grep -oP '[0-9]+\.[0-9]+\.[0-9]+' > drivers.txt
+curl -s "$REPO" | grep -oP '[0-9]+\.[0-9]+\.[0-9]+' > drivers.txt
 
 # Get the latest version number from the last line of drivers.txt
-version=$(tail -n 1 drivers.txt)
-filename="NVIDIA-Linux-x86_64-${version}.run"
+VERSION=$(tail -n 1 drivers.txt)
+FILENAME="NVIDIA-Linux-x86_64-${VERSION}.run"
 
 # Print the latest version
-echo -e "Downloading latest NVIDIA driver version: \033[32m\033[01m$version\033[00m"
+echo -e "Downloading latest NVIDIA driver version: \033[32m\033[01m$VERSION\033[00m"
 
 # Construct the URL for downloading the .run file
-url="https://download.nvidia.com/XFree86/Linux-x86_64/${version}/${filename}"
+url="https://download.nvidia.com/XFree86/Linux-x86_64/${VERSION}/${FILENAME}"
 
 # Download the driver
 # I kept curl because of less dependencies plus download speed is fine
 # I commented out wget and aria2c for easy swapping if desired
-curl --progress-bar --continue-at - "$url" --output "${filename}"
-#wget -q --show-progress --progress=bar -c "$url" -O "${filename}"
-#aria2c -x 16 -s 16 -c "$url" -o "${filename}"
+curl --progress-bar --continue-at - "$url" --output "${FILENAME}"
+#wget -q --show-progress --progress=bar -c "$url" -O "${FILENAME}"
+#aria2c -x 16 -s 16 -c "$url" -o "${FILENAME}"
 
 # Check if the download was successful
 if [ $? -eq 0 ]; then
-    echo -e "Downloaded \033[32m\033[01m${filename}\033[00m successfully."
+    echo -e "Downloaded \033[32m\033[01m${FILENAME}\033[00m successfully."
 else
-    echo -e "\033[31mFailed to download \033[0m\033[00m${filename}\033[01m\033[00m"
+    echo -e "\033[31mFailed to download \033[0m\033[00m${FILENAME}\033[01m\033[00m"
     exit 1
 fi
 
 # Make .run file executable
-if chmod +x "${filename}"; then
-    echo -e "\033[32m\033[01m${filename}\033[00m is now executable."
+if chmod +x "${FILENAME}"; then
+    echo -e "\033[32m\033[01m${FILENAME}\033[00m is now executable."
 else
-    echo -e "${filename} \033[31m\033[01mis not executable.\033[00m"
+    echo -e "${FILENAME} \033[31m\033[01mis not executable.\033[00m"
     exit 1
 fi
 
