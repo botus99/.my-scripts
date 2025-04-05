@@ -30,4 +30,4 @@ unzip xenia_canary_windows.zip -d "$XENIADIR"
 # Clean up
 rm xenia_canary_windows.zip
 
-echo "Xenia download and extraction completed successfully!"
+echo "Xenia Canary download and extraction completed successfully!"
