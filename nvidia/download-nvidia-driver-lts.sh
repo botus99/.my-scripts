@@ -17,10 +17,10 @@ LATEST_VERSION=$(head -n 1 "latest.txt" | awk '{print $2}')
 FILENAME=$(grep -oP '/\K[^ ]+\.run' latest.txt)
 
 # Construct the URL for downloading the .run file
-url="https://download.nvidia.com/XFree86/Linux-x86_64/${LATEST_VERSION}"
+URL="https://download.nvidia.com/XFree86/Linux-x86_64/${LATEST_VERSION}"
 
 # Download the file
-wget -q --show-progress --progress=bar -c "$url" -O "${FILENAME}"
+wget -q --show-progress --progress=bar -c "$URL" -O "${FILENAME}"
 
 # Check if the download was successful
 if [ $? -eq 0 ]; then
@@ -39,7 +39,7 @@ else
 fi
 
 # Remove latest.txt file
-rm ./latest.txt
+rm latest.txt
 
 # Final message
 echo "Make sure to do research before installing/upgrading."

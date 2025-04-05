@@ -17,14 +17,14 @@ FILENAME="NVIDIA-Linux-x86_64-${VERSION}.run"
 echo -e "Downloading latest NVIDIA driver version: \033[32m\033[01m$VERSION\033[00m"
 
 # Construct the URL for downloading the .run file
-url="https://download.nvidia.com/XFree86/Linux-x86_64/${VERSION}/${FILENAME}"
+URL="https://download.nvidia.com/XFree86/Linux-x86_64/${VERSION}/${FILENAME}"
 
 # Download the driver
 # I kept curl because of less dependencies plus download speed is fine
 # I commented out wget and aria2c for easy swapping if desired
-curl --progress-bar --continue-at - "$url" --output "${FILENAME}"
-#wget -q --show-progress --progress=bar -c "$url" -O "${FILENAME}"
-#aria2c -x 16 -s 16 -c "$url" -o "${FILENAME}"
+curl --progress-bar --continue-at - "$URL" --output "${FILENAME}"
+#wget -q --show-progress --progress=bar -c "$URL" -O "${FILENAME}"
+#aria2c -x 16 -s 16 -c "$URL" -o "${FILENAME}"
 
 # Check if the download was successful
 if [ $? -eq 0 ]; then
