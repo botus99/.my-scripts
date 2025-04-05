@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Exit the script immediately if any command fails
+set -euo pipefail
+
 # ASCII art header
 echo -e "+----------------------------------------------------------------------------------------+"
 echo -e "|\e[38;5;208m                 ██████╗  ██████╗  ██╗   ██╗ ████████╗  █████╗  ██╗                     \e[0m|"
@@ -52,16 +55,37 @@ if ! ping -c 1 github.com &> /dev/null; then
 fi
 
 # Download the file using wget with a progress bar and continuing a partially downloaded file if applicable
-if ! wget --no-verbose --progress=bar --show-progress --continue --output-document="$FILENAME" "$URL"; then
+if ! wget --no-verbose --progress=bar --show-progress --output-document="$FILENAME" "$URL"; then
     echo -e "\033[0;31mDownload failed. \e[0mError: $?"
     exit 1
 fi
 
 # Check if download was successful
 if [ -f "$FILENAME" ]; then
-    echo -e "Latest devoloper version of Brutal Doom Community downloaded successfully."
-    echo -e "\033[0;31mRip and tear!\e[0m"
+    echo "Latest devoloper version of Brutal Doom Community downloaded successfully."
 else
     echo -e "\033[0;31mFile not found after download. \e[0mExiting."
     exit 1
 fi
+
+# Extract pk3 file to temp directory
+echo "Extracting contents..."
+unzip -q "$FILENAME" -d temp_dir
+
+# Navigate to root of extracted pk3
+echo "Changing directory structure..."
+cd temp_dir/Brutal-Doom-Community-Expansion-master
+
+# Compress to pk3
+echo "Compressing modified contents..."
+zip -q -r -9 "../../Brutal-Doom-Community-Expansion-master.pk3" . 
+
+# Clean up and finalize things
+cd ../..
+rm -rf temp_dir
+rm "$FILENAME"
+mv Brutal-Doom-Community-Expansion-master.pk3 "$FILENAME"
+
+# Success message
+echo "Operation completed successfully."
+echo "Rip and tear!"
