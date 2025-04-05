@@ -3,7 +3,6 @@
 # Set default values
 URL="https://cdimage.debian.org/cdimage/weekly-live-builds/amd64/iso-hybrid"
 OUTPUT_DIR="$PWD"
-FILENAME="debian-live-testing-amd64-${DESKTOP_ENV}.iso"
 
 # Function to display menu and get user input
 show_menu() {
@@ -34,6 +33,9 @@ case $choice in
     8) DESKTOP_ENV="standard";;
     *) echo "Your choice is invalid. Get out of here."; exit 1;;
 esac
+
+# Set filename to chosen desktop environment
+FILENAME="debian-live-testing-amd64-${DESKTOP_ENV}.iso"
 
 # Check network connectivity
 if ! ping -c 1 debian.org &> /dev/null; then
