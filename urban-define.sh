@@ -26,21 +26,21 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Loop through each argument
-for word in "$@"; do
+for WORD in "$@"; do
     # Search for the word on Urban Dictionary
-    result=$(curl -s "https://api.urbandictionary.com/v0/define?term=$word")
+    RESULT=$(curl -s "https://api.urbandictionary.com/v0/define?term=$WORD")
 
     # Check if the search was successful
     if [ $? -ne 0 ]; then
-        echo "Error searching for '$word'"
+        echo "Error searching for '$WORD'"
         continue
     fi
 
     # Extract the definition from the JSON response
-    definition=$(echo "$result" | jq -r '.list[0].definition')
+    DEFINITION=$(echo "$RESULT" | jq -r '.list[0].definition')
 
     # Display the result
-    echo -e "\033[0;36mUrban Dictionary definition of '\033[0;32m$word\033[0m\033[0;36m':\033[0m"
-    fold -w 80 -s <<< "$definition"
+    echo -e "\033[0;36mUrban Dictionary definition of '\033[0;32m$WORD\033[0m\033[0;36m':\033[0m"
+    fold -w 80 -s <<< "$DEFINITION"
     echo ""
 done

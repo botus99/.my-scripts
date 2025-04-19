@@ -9,27 +9,27 @@ OUTPUT_WIDTH=80
 
 # Function to get word from command line argument
 get_word() {
-    local arg="${1:-}"
-    [[ -z "$arg" ]] || echo "$arg"
+    local ARG="${1:-}"
+    [[ -z "$ARG" ]] || echo "$ARG"
 }
 
 # Function to fetch dictionary entry
 fetch_entry() {
-    local word="$1"
-    curl -s "$API_URL$word"
+    local WORD="$1"
+    curl -s "$API_URL$WORD"
 }
 
 # Function to display word in bold
 display_bold() {
-    local text="$1"
-    echo -e "\033[0;36m\033[1m${text}\033[0m"
+    local TEXT="$1"
+    echo -e "\033[0;36m\033[1m${TEXT}\033[0m"
     echo -e "---"
 }
 
 # Function to display definitions
 display_definitions() {
-    local definitions="$1"
-    echo -e "$definitions" | fold -w "$OUTPUT_WIDTH" -s
+    local DEFINITIONS="$1"
+    echo -e "$DEFINITIONS" | fold -w "$OUTPUT_WIDTH" -s
 }
 
 # Help function
@@ -87,29 +87,29 @@ done
 
 # Main function
 main() {
-    local word=$(get_word "$@")
+    local WORD=$(get_word "$@")
     
-    if [[ -z "$word" ]]; then
-        read -p "Enter a word: " word
+    if [[ -z "$WORD" ]]; then
+        read -p "Enter a word: " WORD
         echo -ne "\033[A\033[K"
     fi
 
-    local query=$(fetch_entry "$word")
+    local QUERY=$(fetch_entry "$WORD")
 
-    if [[ -z "$query" ]]; then
-        echo -e "Invalid word: \033[1m$word" >&2
+    if [[ -z "$QUERY" ]]; then
+        echo -e "Invalid word: \033[1m$WORD" >&2
         exit 1
     fi
 
-    local definitions=$(echo "$query" | jq -r '
+    local DEFINITIONS=$(echo "$QUERY" | jq -r '
         [.[] | 
             .meanings[] | 
             {pos: .partOfSpeech, def: .definitions[].definition}] | 
         .[:'$MAX_DEFINITIONS'].[] | "\n\(.pos). \(.def)"
     ')
 
-    display_bold "$word"
-    display_definitions "$definitions"
+    display_bold "$WORD"
+    display_definitions "$DEFINITIONS"
 }
 
 # Run main function
