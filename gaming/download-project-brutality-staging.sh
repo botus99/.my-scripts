@@ -54,8 +54,8 @@ if ! ping -c 1 github.com &> /dev/null; then
     exit 1
 fi
 
-# Download the file using wget with a progress bar and continuing a partially downloaded file if applicable
-if ! wget --no-verbose --progress=bar --show-progress --no-clobber --output-document="$FILENAME" "$URL"; then
+# Download current staging build
+if ! wget --no-verbose --progress=bar --show-progress --output-document="$FILENAME" "$URL"; then
     echo -e "\033[0;31mDownload failed. \e[0mError: $?"
     exit 1
 fi
