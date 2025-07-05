@@ -75,6 +75,7 @@ unzip -q "$FILENAME" -d temp_dir
 # Navigate to root of extracted pk3
 echo "Changing directory structure..."
 cd temp_dir/BrutalDoomPlatinum-main
+rm -rf .github
 
 # Compress to pk3
 echo "Compressing modified contents..."
