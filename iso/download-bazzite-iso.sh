@@ -19,18 +19,21 @@ NC='\033[0m' # No Color
 # Function to display Bazzite ISOs and get user input
 show_menu() {
     echo -e "${BLUE}#=============================================================================#${NC}"
-    echo -e "${CYAN}#              NOTE: Deck releases use KDE and Steam Gaming Mode.             #${NC}"
-    echo -e "${CYAN}# Nvidia GTX releases do not support gaming mode and default to desktop mode. #${NC}"
+    echo -e "${CYAN}#               NOTE: Deck releases use KDE & Steam Gaming Mode.              #${NC}"
+    echo -e "${CYAN}#     Old GPUs do not support Steam Gaming Mode & default to desktop mode.    #${NC}"
     echo -e "${BLUE}#=============================================================================#${NC}"
     echo -e "Select your version of ${MAGENTA}Bazzite${NC}:"
-    echo -e "${BLUE}- - - - - - - - - - - - - - - -${NC}"
-    echo -e "1. Modern ${RED}AMD${NC} GPU Deck release"
-    echo -e "2. Modern ${RED}AMD${NC} GPU Deck Live release"
-    echo -e "3. ${GREEN}Nvidia${NC} RTX GPU Deck release"
-    echo -e "4. ${GREEN}Nvidia${NC} RTX GPU Deck Live release"
-    echo -e "5. ${GREEN}Nvidia${NC} GTX GPU release"
-    echo -e "6. ${GREEN}Nvidia${NC} GTX GPU Live release"
-    read -p "Enter your choice (1-6): " choice
+    echo -e "${YELLOW}- - - - - - - - - - - - - - - - - -${NC}"
+    echo -e "1. New ${RED}AMD${NC} or ${BLUE}Intel${NC} GPU Deck"
+    echo -e "2. New ${RED}AMD${NC} or ${BLUE}Intel${NC} GPU Deck [${CYAN}Live${NC}]"
+    echo -e "3. Old ${RED}AMD${NC} or ${BLUE}Intel${NC} GPU"
+    echo -e "4. Old ${RED}AMD${NC} or ${BLUE}Intel${NC} GPU [${CYAN}Live${NC}]"
+    echo -e "5. New ${GREEN}Nvidia${NC} RTX GPU Deck"
+    echo -e "6. New ${GREEN}Nvidia${NC} RTX GPU Deck [${CYAN}Live${NC}]"
+    echo -e "7. Old ${GREEN}Nvidia${NC} GTX GPU"
+    echo -e "8. Old ${GREEN}Nvidia${NC} GTX GPU [${CYAN}Live${NC}]"
+    echo -e "${YELLOW}- - - - - - - - - - - - - - - - - -${NC}"
+    read -p "Enter your choice (1-8): " choice
 }
 
 # Show menu and get user input
@@ -40,10 +43,12 @@ show_menu
 case $choice in
     1) RELEASE_TYPE="deck-stable";;
     2) RELEASE_TYPE="deck-stable-live";;
-    3) RELEASE_TYPE="deck-nvidia-stable";;
-    4) RELEASE_TYPE="deck-nvidia-stable-live";;
-    5) RELEASE_TYPE="nvidia-stable";;
-    6) RELEASE_TYPE="nvidia-stable-live";;
+    3) RELEASE_TYPE="stable";;
+    4) RELEASE_TYPE="stable-live";;
+    5) RELEASE_TYPE="nvidia-open-stable";;
+    6) RELEASE_TYPE="nvidia-open-stable-live";;
+    7) RELEASE_TYPE="nvidia-stable";;
+    8) RELEASE_TYPE="nvidia-stable-live";;
     *) echo "Your choice is invalid. Get out of here."; exit 1;;
 esac
 
@@ -52,11 +57,15 @@ if [ "$RELEASE_TYPE" = "deck-stable" ]; then
     FILENAME="bazzite-deck-stable-amd64.iso"
 elif [ "$RELEASE_TYPE" = "deck-stable-live" ]; then
     FILENAME="bazzite-deck-stable-live.iso"
-elif [ "$RELEASE_TYPE" = "deck-nvidia-stable" ]; then
-    FILENAME="bazzite-deck-nvidia-stable.iso"
-elif [ "$RELEASE_TYPE" = "deck-nvidia-stable-live" ]; then
-    FILENAME="bazzite-deck-nvidia-stable-live.iso"
-elif [ "$RELEASE_TYPE" = "nvidia-stable-amd64" ]; then
+elif [ "$RELEASE_TYPE" = "stable" ]; then
+    FILENAME="bazzite-stable-amd64.iso"
+elif [ "$RELEASE_TYPE" = "stable-live" ]; then
+    FILENAME="bazzite-stable-live.iso"
+elif [ "$RELEASE_TYPE" = "nvidia-open-stable" ]; then
+    FILENAME="bazzite-nvidia-open-stable-amd64.iso"
+elif [ "$RELEASE_TYPE" = "nvidia-open-stable-live" ]; then
+    FILENAME="bazzite-nvidia-open-stable-live.iso"
+elif [ "$RELEASE_TYPE" = "nvidia-stable" ]; then
     FILENAME="bazzite-nvidia-stable-amd64.iso"
 elif [ "$RELEASE_TYPE" = "nvidia-stable-live" ]; then
     FILENAME="bazzite-nvidia-stable-live.iso"
