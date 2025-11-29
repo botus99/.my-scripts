@@ -7,7 +7,7 @@ set -euo pipefail
 XENIADIR="$HOME/xenia-canary"
 
 # Make sure Xenia directory exists
-mkdir $XENIADIR
+mkdir "$XENIADIR"
 
 # Download the latest Xenia release (Windows)
 wget -q --show-progress --progress=bar -c "https://github.com/xenia-canary/xenia-canary-releases/releases/latest/download/xenia_canary_windows.zip"
