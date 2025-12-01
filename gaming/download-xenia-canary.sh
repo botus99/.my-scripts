@@ -6,6 +6,12 @@ set -euo pipefail
 # Set directory for Xenia variable
 XENIADIR="$HOME/xenia-canary"
 
+# Check network connectivity
+if ! ping -c 1 github.com &> /dev/null; then
+    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
+    exit 1
+fi
+
 # Make sure Xenia directory exists
 mkdir "$XENIADIR"
 

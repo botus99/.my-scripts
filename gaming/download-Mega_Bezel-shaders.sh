@@ -16,6 +16,12 @@ LATEST_RELEASE=$(curl --silent "https://api.github.com/repos/HyperspaceMadness/M
 # Extract the download URL of the latest release asset
 LATEST_RELEASE_URL=$(echo "$RELEASES" | jq -r '.assets[0].browser_download_url')
 
+# Check network connectivity
+if ! ping -c 1 github.com &> /dev/null; then
+    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
+    exit 1
+fi
+
 # Create the destination directory if it doesn't already exist
 mkdir -p "$DEST_DIR"
 

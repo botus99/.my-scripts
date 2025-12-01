@@ -9,6 +9,12 @@ OLD_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_
 SRC_ZIP="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/Retro-Crisis-GDV-NTSC-latest.zip"
 DEST_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch"
 
+# Check network connectivity
+if ! ping -c 1 github.com &> /dev/null; then
+    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
+    exit 1
+fi
+
 # Create the destination directory if it doesn't already exist
 mkdir -p "$DEST_DIR"
 

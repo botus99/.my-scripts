@@ -2,6 +2,12 @@
 
 set -e
 
+# Check network connectivity
+if ! ping -c 1 github.com &> /dev/null; then
+    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
+    exit 1
+fi
+
 # Change directory to RetroArch shaders config
 cd "$HOME"/.var/app/org.libretro.RetroArch/config/retroarch/shaders || exit 1
 
