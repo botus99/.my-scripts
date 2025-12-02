@@ -71,12 +71,12 @@ while [[ $# -gt 0 ]]; do
             ;;
         -d|--definitions)
             shift
-            MAX_DEFINITIONS=$1
+            MAX_DEFINITIONS="$1"
             shift
             ;;
         -w|--width)
             shift
-            OUTPUT_WIDTH=$1
+            OUTPUT_WIDTH="$1"
             shift
             ;;
         *)
