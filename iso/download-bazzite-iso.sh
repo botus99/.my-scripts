@@ -90,13 +90,13 @@ download_iso() {
     # Try aria2c first
     if command -v aria2c &>/dev/null && aria2c --max-connection-per-server=16 --split=16 --out="$OUTPUT_DIR/$FILENAME" "$URL"; then
         echo "Downloaded $FILENAME to $OUTPUT_DIR"
-        return 0
+        exit 0
     fi
     
     # If aria2c fails or not installed, use wget
     if wget --no-verbose --show-progress --progress=bar --output-document="$OUTPUT_DIR/$FILENAME" "$URL"; then
         echo "Downloaded $FILENAME to $OUTPUT_DIR"
-        return 0
+        exit 0
     else
         echo "Failed to download $FILENAME" >&2
         return 1
