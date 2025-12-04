@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Set default values
-URL="https://cdimage.debian.org/cdimage/weekly-live-builds/amd64/iso-hybrid"
+BASE_URL="https://cdimage.debian.org/cdimage/weekly-live-builds/amd64/iso-hybrid"
 OUTPUT_DIR="$PWD"
 
 # Function to display menu and get user input
@@ -46,9 +46,25 @@ fi
 # Create output directory
 mkdir -p "$OUTPUT_DIR"
 
+# Function to download using aria2c or wget
+download_iso() {
+    local URL="${BASE_URL}/${FILENAME}"
+
+    # Try aria2c first
+    if command -v aria2c &>/dev/null && aria2c --max-connection-per-server=16 --split=16 --out="$OUTPUT_DIR/$FILENAME" "$URL"; then
+        echo "Downloaded $FILENAME to $OUTPUT_DIR"
+        exit 0
+    fi
+    
+    # If aria2c fails or not installed, use wget
+    if wget --no-verbose --show-progress --progress=bar --output-document="$OUTPUT_DIR/$FILENAME" "$URL"; then
+        echo "Downloaded $FILENAME to $OUTPUT_DIR"
+        exit 0
+    else
+        echo "Failed to download $FILENAME" >&2
+        return 1
+    fi
+}
+
 # Download latest ISO
-if wget --no-verbose --show-progress --progress=bar --output-document="$OUTPUT_DIR/$FILENAME" "${URL}/${FILENAME}"; then
-    echo "Downloaded $FILENAME to $OUTPUT_DIR"
-else
-    echo "Failed to download $FILENAME" >&2
-fi
+download_iso
