@@ -18,10 +18,10 @@ NC='\033[0m' # No Color
 
 # Function to display Bazzite ISOs and get user input
 show_menu() {
-    echo -e "${BLUE}#=============================================================================#${NC}"
-    echo -e "${CYAN}#               NOTE: Deck releases use KDE & Steam Gaming Mode.              #${NC}"
-    echo -e "${CYAN}#     Old GPUs do not support Steam Gaming Mode & default to desktop mode.    #${NC}"
-    echo -e "${BLUE}#=============================================================================#${NC}"
+    echo -e "${BLUE}#===========================================================================#${NC}"
+    echo -e "${CYAN}#              NOTE: Deck releases use KDE & Steam Gaming Mode.             #${NC}"
+    echo -e "${CYAN}#    Old GPUs do not support Steam Gaming Mode & default to desktop mode.   #${NC}"
+    echo -e "${BLUE}#===========================================================================#${NC}"
     echo -e "Select your version of ${MAGENTA}Bazzite${NC}:"
     echo -e "${YELLOW}- - - - - - - - - - - - - - - - - -${NC}"
     echo -e "1. New ${RED}AMD${NC} or ${BLUE}Intel${NC} GPU Deck"
