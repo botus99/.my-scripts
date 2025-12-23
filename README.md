@@ -16,4 +16,4 @@ Most scripts meant to run within the current working directory (notable exceptio
 
 Some scripts will require configuration to work on your system (i.e. media/mlmf.sh). As always, read the scripts before running them.
 
-Keep in mind that these scripts may require dependencies, specifically python, find, fzf, imagemagick, jpegoptim, oxipng, ffmpeg, mediainfo, mkvmerge, and mpv. Assuming the needed dependencies are installed and working, these scripts should work.
+Keep in mind that these scripts may require dependencies, specifically python, find, fzf, imagemagick, jpegoptim, oxipng, ffmpeg (from the Unofficial Multimedia Packages repo for nvidia codec support), mediainfo, mkvmerge, and mpv. Assuming the needed dependencies are installed and working, these scripts should work.
