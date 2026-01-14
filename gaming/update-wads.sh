@@ -3,6 +3,8 @@
 # This is my over-engineered script to download the newest versions of my favorite doom wads.
 # It relies on other scripts located in this directory. Note the SCRIPT_PATH location.
 # If you do not have a DOOMWADDIR set up, it would be better in your bashrc, profile, /etc/environment, or similar.
+#
+# idea for later : make `󰳳` the progress character for wget commands
 
 # Set strict mode
 set -euo pipefail
@@ -16,9 +18,9 @@ RESET='\033[0m'
 # Function to display colored messages
 print_message() {
     case "$1" in
-        "ERROR") echo -e "${RED}$2${RESET}" ;;
+        "ERROR") echo -e "🤭 ${RED}$2${RESET}" ;;
         "SUCCESS") echo -e "${GREEN}$2${RESET}" ;;
-        "INFO") echo -e "${YELLOW}$2${RESET}" ;;
+        "INFO") echo -e "🤓 ${YELLOW}$2${RESET}" ;;
         *) echo "$2" ;;
     esac
 }
@@ -51,11 +53,12 @@ main() {
         bash "$SCRIPT_PATH" || { print_message "ERROR" "Execution failed for $WAD"; return 1; }
 
         # Success message
-        print_message "SUCCESS" "Completed download for $WAD"
+        print_message "SUCCESS" "👿 $WAD is ready. Go kill some imps"
     done
 
     # Success message
-    print_message "SUCCESS" "All downloads completed successfully!"
+    print_message "SUCCESS" "✅ WADs/PK3s downloaded successfully!"
+    print_message "SUCCESS" "🔫 RIP AND TEAR!!!"
 }
 
 # Run the main function
