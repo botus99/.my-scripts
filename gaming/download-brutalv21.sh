@@ -79,7 +79,7 @@ rm -rf .github
 
 # Compress to pk3
 echo "Compressing modified contents..."
-zip -q -r -9 "../../Brutal-Doom-Community-Expansion-master.pk3" . 
+zip -q -r -9 "../../Brutal-Doom-Community-Expansion-master.pk3" .
 
 # Clean up and finalize things
 cd ../..
@@ -87,6 +87,6 @@ rm -rf temp_dir
 rm "$FILENAME"
 mv Brutal-Doom-Community-Expansion-master.pk3 "$FILENAME"
 
-# Success message
-echo "Operation completed successfully."
-echo "Rip and tear!"
+# Success message (commented out in favor of the script sourcing this script doing the echo)
+#echo "Operation completed successfully."
+#echo "Rip and tear!"
