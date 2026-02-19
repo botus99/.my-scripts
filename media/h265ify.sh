@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+#
+# some common video filters: hqdn3d, deblock, deband (add after deinterlacing if using these)
+# here are some deinterlacing filters to add when needed...
+#           -vf bwdif \ # Uncomment for frame-doubling bob de-interlacing
+#           -vf yadif=1 \ # Uncomment for frame-doubling yadif de-interlacing
+#           -vf fieldmatch,decimate,fps=24000/1001 \ # Uncomment for converting 29.97fps (TV) to 23.976fps (film)
 
 for file in ./*.mkv; do
     ffmpeg \
