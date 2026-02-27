@@ -2,7 +2,7 @@
 
 # Set default values
 BASE_URL="https://cdimage.debian.org/cdimage/weekly-live-builds/amd64/iso-hybrid"
-OUTPUT_DIR="$PWD"
+OUTPUT_DIR="$(pwd -P)"
 
 # Function to display menu and get user input
 show_menu() {
@@ -51,13 +51,21 @@ download_iso() {
     local URL="${BASE_URL}/${FILENAME}"
 
     # Try aria2c first
-    if command -v aria2c &>/dev/null && aria2c --max-connection-per-server=16 --split=16 --out="$OUTPUT_DIR/$FILENAME" "$URL"; then
+    if command -v aria2c &>/dev/null && aria2c \
+        --max-connection-per-server=16 \
+        --split=16 \
+        --dir="$OUTPUT_DIR" \
+        --out="$FILENAME" \
+        "$URL"; then
         echo "Downloaded $FILENAME to $OUTPUT_DIR"
         exit 0
     fi
-    
+
     # If aria2c fails or not installed, use wget
-    if wget --no-verbose --show-progress --progress=bar --output-document="$OUTPUT_DIR/$FILENAME" "$URL"; then
+    if command -v wget --no-verbose --show-progress \
+        --progress=bar \
+        --output-document="$OUTPUT_DIR/$FILENAME" \
+        "$URL"; then
         echo "Downloaded $FILENAME to $OUTPUT_DIR"
         exit 0
     else
