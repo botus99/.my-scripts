@@ -56,19 +56,19 @@ esac
 if [ "$RELEASE_TYPE" = "deck-stable" ]; then
     FILENAME="bazzite-deck-stable-amd64.iso"
 elif [ "$RELEASE_TYPE" = "deck-stable-live" ]; then
-    FILENAME="bazzite-deck-stable-live.iso"
+    FILENAME="bazzite-deck-stable-live-amd64.iso"
 elif [ "$RELEASE_TYPE" = "stable" ]; then
     FILENAME="bazzite-stable-amd64.iso"
 elif [ "$RELEASE_TYPE" = "stable-live" ]; then
-    FILENAME="bazzite-stable-live.iso"
+    FILENAME="bazzite-stable-live-amd64.iso"
 elif [ "$RELEASE_TYPE" = "nvidia-open-stable" ]; then
     FILENAME="bazzite-nvidia-open-stable-amd64.iso"
 elif [ "$RELEASE_TYPE" = "nvidia-open-stable-live" ]; then
-    FILENAME="bazzite-nvidia-open-stable-live.iso"
+    FILENAME="bazzite-nvidia-open-stable-live-amd64.iso"
 elif [ "$RELEASE_TYPE" = "nvidia-stable" ]; then
     FILENAME="bazzite-nvidia-stable-amd64.iso"
 elif [ "$RELEASE_TYPE" = "nvidia-stable-live" ]; then
-    FILENAME="bazzite-nvidia-stable-live.iso"
+    FILENAME="bazzite-nvidia-stable-live-amd64.iso"
 else
     echo "Error setting filename based on release."
     exit 1
