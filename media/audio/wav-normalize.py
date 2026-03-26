@@ -4,19 +4,19 @@ from pydub import AudioSegment
 from pydub.effects import normalize
 
 def normalize_audio(input_file, output_file):
-    # Load the audio file
+    # load audio file
     audio = AudioSegment.from_file(input_file, format='wav')
 
-    # Normalize the audio
+    # normalize audio
     normalized_audio = normalize(audio)
 
-    # Export the normalized audio
+    # export normalized audio
     normalized_audio.export(output_file, format='wav')
 
-# Get the current directory
+# get current directory
 current_directory = os.getcwd()
 
-# Iterate over files in the current directory
+# iterate over files in current directory
 for filename in os.listdir(current_directory):
     if filename.endswith(".wav"):
         input_file = os.path.join(current_directory, filename)

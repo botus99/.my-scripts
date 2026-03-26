@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Iterate through all PNG files in the current directory
+# iterate through all png files in current directory
 for file in *.png; do
-    # Check if the file exists
+    # check if the file exists
     if [ -f "$file" ]; then
-        # Convert PNG to JPG using ImageMagick
+        # Convert png to jpg using imagemagick
         convert "$file" "${file%.png}.jpg"
     fi
 done

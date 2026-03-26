@@ -8,10 +8,10 @@ COLOR_RED = '\033[91m'
 COLOR_RESET = '\033[0m'
 
 def process_jpeg_file(jpeg_file):
-    # Construct the command to run jpegoptim
+    # construct command to run jpegoptim
     command = ['jpegoptim', '--max=80', '--strip-all', jpeg_file]
 
-    # Run the command using subprocess
+    # run command using subprocess
     try:
         subprocess.run(command, check=True)
         print(f"{COLOR_GREEN}Optimized{COLOR_RESET}: {jpeg_file}")
@@ -25,8 +25,8 @@ def process_directory(directory):
                 jpeg_file = os.path.join(root, file)
                 process_jpeg_file(jpeg_file)
 
-# Get the current directory
+# get current directory
 current_directory = os.getcwd()
 
-# Recursively process JPEG files in the current directory
+# recursively process jpeg files in the current directory
 process_directory(current_directory)
