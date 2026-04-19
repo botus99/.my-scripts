@@ -1,65 +1,98 @@
 #!/usr/bin/env bash
-
-# This is my over-engineered script to download the newest versions of my favorite doom wads.
-# It relies on other scripts located in this directory. Note the SCRIPT_PATH location.
-# If you do not have a DOOMWADDIR set up, it would be better in your bashrc, profile, /etc/environment, or similar.
+#=============================================================================#
+# name:        update-wads.sh
+# author:      botus99
+# messed with: 2026-04-19
+# description: script to download the newest versions of my favorite doom wads
+#              scripts in SCRIPT_PATH are needed, note the SCRIPT_PATH location
 #
-# idea for later : make `󰳳` the progress character for wget commands
+# note:        if you do not have a DOOMWADDIR set up, it would probably be
+#              better in your bashrc, profile, /etc/environment, or similar
+#=============================================================================#
 
-# Set strict mode
+# exit script if anything craps out
 set -euo pipefail
 
-# Define colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RESET='\033[0m'
+#=============================================================================#
+#                                   CONFIG                                    #
+#=============================================================================#
 
-# Function to display colored messages
-print_message() {
-    case "$1" in
-        "ERROR") echo -e "🤭 ${RED}$2${RESET}" ;;
-        "SUCCESS") echo -e "${GREEN}$2${RESET}" ;;
-        "INFO") echo -e "🤓 ${YELLOW}$2${RESET}" ;;
-        *) echo "$2" ;;
-    esac
+# colors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+RESET="\033[0m"
+
+log()   { echo -e "${GREEN}[INFO]${RESET} $1"; }
+warn()  { echo -e "${YELLOW}[WARN]${RESET} $1"; }
+error() { echo -e "${RED}[ERROR]${RESET} $1"; exit 1; }
+
+#=============================================================================#
+#                               HELPER FUNCS                                  #
+#=============================================================================#
+
+separator() {
+    local COLS
+    COLS=$(tput COLS 2>/dev/null || echo "${COLUMNS:-80}")
+    printf "${YELLOW}%*s${RESET}\n" "$COLS" '' | tr ' ' '='
 }
 
-# Main function
+#=============================================================================#
+#                               SANITY CHECKS                                 #
+#=============================================================================#
+
+[[ -z "${DOOMWADDIR:-}" ]] && error "DOOMWADDIR is not set"
+[[ ! -d "$DOOMWADDIR" ]] && error "DOOMWADDIR does not exist: $DOOMWADDIR"
+
+#=============================================================================#
+#                                   MAIN                                      #
+#=============================================================================#
+
 main() {
-    # Define script and directory names
+    # define script and directory names
     local WAD_DIRS=(
         "brutalv21"
         "brutal-doom-platinum"
         "project-brutality-staging"
     )
 
-    # Launch download scripts for each WAD_DIRS entry
     for WAD in "${WAD_DIRS[@]}"; do
+        local WAD_PATH="$DOOMWADDIR/$WAD"
+        local SCRIPT_PATH="$HOME/.my-scripts/gaming/download-${WAD}.sh"
 
-        # Go into wad directory before executing download script
-        cd "$DOOMWADDIR/$WAD" || { print_message "ERROR" "Failed to change directory to $WAD"; return 1; }
-        print_message "INFO" "Changing to directory: $WAD"
+        separator
+        log "Processing: $WAD"
 
-        # Look for download script
-        SCRIPT_PATH="$HOME/.my-scripts/gaming/download-${WAD}.sh"
-        if [ ! -f "$SCRIPT_PATH" ]; then
-            print_message "ERROR" "Script not found: $SCRIPT_PATH"
+        # validate wad directory
+        if [[ ! -d "$WAD_PATH" ]]; then
+            warn "Directory not found: $WAD_PATH (skipping)"
             continue
         fi
 
-        # Execute WAD_DIRS download scripts
-        print_message "INFO" "Executing script for $WAD"
-        bash "$SCRIPT_PATH" || { print_message "ERROR" "Execution failed for $WAD"; return 1; }
+        # validate script
+        if [[ ! -f "$SCRIPT_PATH" ]]; then
+            warn "Download script missing: $SCRIPT_PATH (skipping)"
+            continue
+        fi
 
-        # Success message
-        print_message "SUCCESS" "👿 $WAD is ready. Go kill some imps"
+        log "Using directory: $WAD_PATH"
+        log "Executing: $(basename "$SCRIPT_PATH")"
+
+        # run script in subshell to avoid cd pollution
+        (
+            cd "$WAD_PATH" || exit 1
+            bash "$SCRIPT_PATH"
+        ) || {
+            warn "Execution failed for $WAD"
+            continue
+        }
+
+        log "$WAD is ready. Go kill some imps 👿"
     done
 
-    # Success message
-    print_message "SUCCESS" "✅ WADs/PK3s downloaded successfully!"
-    print_message "SUCCESS" "🔫 RIP AND TEAR!!!"
+    separator
+    log "All WADs/PK3s successfully installed."
+    log "RIP AND TEAR 🔫"
 }
 
-# Run the main function
 main
