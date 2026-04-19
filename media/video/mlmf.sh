@@ -7,7 +7,7 @@ MEDIA_DIR="${1:-/path/to/media/folder/}"
 # Set colors for fzf
 COLOR_OPTS="bg+:0,fg:15,fg+:9,border:8,hl+:2,prompt:15,hl:2,pointer:1,info:8,spinner:1"
 
-# Create centered header
+# customize the app name (make it nsfw or not)
 LABEL=$(echo "media launcher mf")
 
 # Check if the user passed the '-h' or the '--help' flag. If so, display usage instructions.
