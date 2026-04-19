@@ -1,56 +1,90 @@
 #!/usr/bin/env bash
+#=============================================================================#
+# Name:        download-Mega_Bezel-shaders.sh
+# Author:      botus99
+# Updated:     2026-04-19
+# Description: downloads and installs the latest Mega Bezel shaders for...
+#              retroarch (flatpak)
+#=============================================================================#
+
+# exit script if anything craps out
+set -euo pipefail
 
 #=============================================================================#
-#                                   STAGING                                   #
+#                                   CONFIG                                    #
 #=============================================================================#
 
-# Define the source and destination directories
-OLD_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/bezel/Mega_Bezel"
-SRC_ZIP="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/Mega_Bezel-latest.zip"
-DEST_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/bezel"
+BASE_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch"
+SHADER_DIR="$BASE_DIR/shaders/shaders_slang"
+DEST_DIR="$SHADER_DIR/bezel"
+OLD_DIR="$DEST_DIR/Mega_Bezel"
+ZIP_FILE="$SHADER_DIR/Mega_Bezel-latest.zip"
+API_URL="https://api.github.com/repos/HyperspaceMadness/Mega_Bezel/releases/latest"
 
-# Fetch the releases page
-RELEASES=$(curl --silent "https://api.github.com/repos/HyperspaceMadness/Mega_Bezel/releases/latest")
-LATEST_RELEASE=$(curl --silent "https://api.github.com/repos/HyperspaceMadness/Mega_Bezel/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+# colors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+RESET="\033[0m"
 
-# Extract the download URL of the latest release asset
-LATEST_RELEASE_URL=$(echo "$RELEASES" | jq -r '.assets[0].browser_download_url')
+log()    { echo -e "${GREEN}[INFO]${RESET} $1"; }
+warn()   { echo -e "${YELLOW}[WARN]${RESET} $1"; }
+error()  { echo -e "${RED}[ERROR]${RESET} $1"; exit 1; }
 
-# Check network connectivity
-if ! ping -c 1 github.com &> /dev/null; then
-    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
-    exit 1
-fi
+# cleanup on exit
+trap 'rm -f "$ZIP_FILE"' EXIT
 
-# Create the destination directory if it doesn't already exist
+#=============================================================================#
+#                               SANITY CHECKS                                 #
+#=============================================================================#
+
+log "Checking GitHub connectivity..."
+curl --silent --fail https://api.github.com >/dev/null \
+    || error "Cannot reach GitHub API."
+
+for cmd in curl jq unzip; do
+    command -v "$cmd" &>/dev/null || error "Missing dependency: $cmd"
+done
+
 mkdir -p "$DEST_DIR"
 
-# Check if the directory already exists
+#=============================================================================#
+#                              FETCH RELEASE INFO                             #
+#=============================================================================#
+
+log "Fetching latest release info..."
+
+RELEASES=$(curl --silent "$API_URL")
+LATEST_TAG=$(echo "$RELEASES" | jq -r '.tag_name')
+LATEST_URL=$(echo "$RELEASES" | jq -r '.assets[] | select(.name | endswith(".zip")) | .browser_download_url' | head -n 1)
+
+[ -z "$LATEST_URL" ] && error "Failed to get download URL."
+
+#=============================================================================#
+#                              DOWNLOAD SHADERS                               #
+#=============================================================================#
+
+log "Downloading Mega Bezel shaders ($LATEST_TAG)..."
+curl --fail --location --silent "$LATEST_URL" -o "$ZIP_FILE"
+
+#=============================================================================#
+#                              INSTALL SHADERS                                #
+#=============================================================================#
+
 if [ -d "$OLD_DIR" ]; then
-    # If the directory exists, delete it
+    log "Removing old shaders..."
     rm -rf "$OLD_DIR"
-    echo "Old Mega_Bezel shaders deleted successfully."
 fi
 
-# Check if the source zip exists
-if [ ! -f "$SRC_ZIP" ]; then
-    echo "Source file does not exist: $SRC_ZIP"
-fi
+log "Extracting shaders..."
+unzip -oq "$ZIP_FILE" -d "$DEST_DIR"
+
+log "Finalizing directory structure..."
+mv "$DEST_DIR/$LATEST_TAG/Mega_Bezel" "$OLD_DIR"
+rm -rf "$DEST_DIR/$LATEST_TAG"
 
 #=============================================================================#
-#                               DOWNLOAD SHADERS                              #
+#                                   DONE                                      #
 #=============================================================================#
 
-# Download the latest release
-curl -L "$LATEST_RELEASE_URL" -o "$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/Mega_Bezel-latest.zip"
-echo "Downloaded latest Mega_Bezel shaders successfully."
-
-# Extract the zip file to the destination directory
-unzip "$SRC_ZIP" -d "$DEST_DIR"
-mv "$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/bezel/$LATEST_RELEASE/Mega_Bezel" "$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/bezel/Mega_Bezel"
-echo "New Mega_Bezel shaders extracted successfully."
-
-# Remove downloaded zip file
-rm "$SRC_ZIP"
-rm -rf "$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders/shaders_slang/bezel/$LATEST_RELEASE"
-echo "Cleanup performed successfully"
+log "Mega Bezel shaders installed successfully!"
