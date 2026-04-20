@@ -1,47 +1,88 @@
 #!/usr/bin/env bash
+#=============================================================================#
+# name:        download-extra-duckstation-shaders.sh
+# author:      botus99
+# messed with: 2026-04-20
+# description: stenzek has a repo of extra shaders for duckstaion
+#              all this script does is download/install them
+#=============================================================================#
 
-# Set variables
+# exit script if anything craps out
+set -euo pipefail
+
+#=============================================================================#
+#                                   CONFIG                                    #
+#=============================================================================#
+
 URL="https://github.com/stenzek/emu-shaders/archive/refs/heads/master.zip"
 DUCK_DIR="$HOME/.local/share/duckstation/shaders"
+ZIP_FILE="$DUCK_DIR/emu-shaders.zip"
+EXTRACT_DIR="$DUCK_DIR/emu-shaders-master"
 
-# Check network connectivity
-if ! ping -c 1 github.com &> /dev/null; then
-    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
-    exit 1
-else
-    echo "Downloading extra shaders for Duckstation..."
-fi
+# colors
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+RESET="\033[0m"
 
-# Download the zip file
-wget --quiet "$URL" --output-document="${DUCK_DIR}/emu-shaders.zip" || { echo "Failed to download the file. Please check the URL and network connection."; exit 1; }
+log()   { echo -e "${GREEN}[INFO]${RESET} $1"; }
+warn()  { echo -e "${YELLOW}[WARN]${RESET} $1"; }
+error() { echo -e "${RED}[ERROR]${RESET} $1"; exit 1; }
 
-# Check if download was successful
-if [ $? -eq 0 ]; then
+#=============================================================================#
+#                               SANITY CHECKS                                 #
+#=============================================================================#
 
-    # Success message
-    echo "Extra Duckstation shaders downloaded successfully."
-    echo "Installing shaders..."
+log "Checking internet connectivity..."
+curl --silent --fail https://github.com >/dev/null \
+    || error "Cannot reach GitHub."
 
-    # Extract the zip file
-    unzip -q "${DUCK_DIR}/emu-shaders.zip" -d "${DUCK_DIR}" || { echo "Failed to extract the zip file."; exit 1; }
+log "Checking dependencies..."
+for cmd in wget unzip; do
+    command -v "$cmd" &>/dev/null || error "Missing dependency: $cmd"
+done
 
-    # Remove old shaders
-    rm -rf "${DUCK_DIR}/reshade" "${DUCK_DIR}/dolphinfx"
+mkdir -p "$DUCK_DIR"
 
-    # Create needed directories
-    mkdir -p "${DUCK_DIR}/reshade/Shaders" "${DUCK_DIR}/reshade/Textures" "${DUCK_DIR}/dolphinfx"
+#=============================================================================#
+#                                   MAIN                                      #
+#=============================================================================#
 
-    # Move extracted files to where Duckstation wants them
-    mv --force --update=all "${DUCK_DIR}/emu-shaders-master/reshade/Shaders" "${DUCK_DIR}/reshade/"
-    mv --force --update=all "${DUCK_DIR}/emu-shaders-master/reshade/Textures" "${DUCK_DIR}/reshade/"
-    mv --force --update=all "${DUCK_DIR}/emu-shaders-master/dolphinfx" "${DUCK_DIR}/"
+main() {
+    log "Downloading extra shaders for Duckstation..."
 
-    # Cleanup our leftover mess
-    rm "${DUCK_DIR}/emu-shaders.zip"
-    rm -rf "${DUCK_DIR}/emu-shaders-master"
+    # download the zip file
+    wget --quiet --output-document="$ZIP_FILE" "$URL" \
+        || error "Download failed."
 
-    # Success message
-    echo "Installed extra Duckstation shaders successfully."
-else
-    echo "Failed to install extra shaders."
-fi
+    log "Download completed successfully."
+
+    # extract the zip file
+    log "Extracting shaders..."
+    unzip -q "$ZIP_FILE" -d "$DUCK_DIR" \
+        || error "Extraction failed."
+
+    # remove old shaders
+    log "Preparing shader directories..."
+    rm -rf "$DUCK_DIR/reshade" "$DUCK_DIR/dolphinfx"
+
+    # create needed folders where Duckstation wants them
+    mkdir -p "$DUCK_DIR/reshade/Shaders" \
+             "$DUCK_DIR/reshade/Textures" \
+             "$DUCK_DIR/dolphinfx"
+
+    # move extracted files where Duckstation wants them
+    log "Installing shaders..."
+    mv --force --update=all "$EXTRACT_DIR/reshade/Shaders" "$DUCK_DIR/reshade/"
+    mv --force --update=all "$EXTRACT_DIR/reshade/Textures" "$DUCK_DIR/reshade/"
+    mv --force --update=all "$EXTRACT_DIR/dolphinfx" "$DUCK_DIR/"
+
+    # cleanup after ourselves
+    log "Cleaning up..."
+    rm -f "$ZIP_FILE"
+    rm -rf "$EXTRACT_DIR"
+
+    log "DuckStation shaders installed successfully."
+}
+
+main
