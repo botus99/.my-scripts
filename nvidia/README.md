@@ -1,3 +1,7 @@
+# DEPRECATED / ABANDONED
+
+Sorry. I haved switched to team AMD as of April of 2026. I'll leave what I had for posterity. Hopefully this helps someone and does not simply sit here as a monument to my frustrations getting Nvidia to work well with Debian. I sincerely hope to never have to think about this stuff ever again!
+
 # NVIDIA driver install for Debian
 
 NVIDIA is... inconsistant with their reliability and ease of installation.
