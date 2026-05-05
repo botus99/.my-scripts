@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+#=============================================================================#
+# name:        mlmf.sh
+# author:      botus99
+# updated    : 2026-05-05
+# description: sometimes I want to easily browse local videos from the terminal
+#              just my way to browse and pipe a video into mpv
+#=============================================================================#
 
 # If the user provides a directory as the first argument, use that.
 # Otherwise, define the directory to search for media files below.
@@ -8,7 +15,7 @@ MEDIA_DIR="${1:-/path/to/media/folder/}"
 COLOR_OPTS="bg+:0,fg:15,fg+:9,border:8,hl+:2,prompt:15,hl:2,pointer:1,info:8,spinner:1"
 
 # customize the app name (make it nsfw or not)
-LABEL=$(echo "media launcher mf")
+LABEL="media launcher mf"
 
 # Check if the user passed the '-h' or the '--help' flag. If so, display usage instructions.
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
@@ -53,7 +60,7 @@ fi
 
 # Use 'find' to list all media files, filter with 'fzf', and play the selected file with 'mpv'
 # Step 1: Use the 'find' command to locate media files in the directory.
-find "$MEDIA_DIR" -type f \( -name "*.mkv" -o -name "*.mp4" -o -name "*.mpg" -o -name "*.mpeg" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.mp3" -o -name "*.aac" -o -name "*.flac" -o -name "*.ogg" -o -name "*.opus" \) -printf '%P\n' | \
+find "$MEDIA_DIR" -type f \( -name "*.mkv" -o -name "*.mp4" -o -name "*.mpg" -o -name "*.mpeg" -o -name "*.avi" -o -name "*.mov" -o -name "*.flv" -o -name "*.mp3" -o -name "*.aac" -o -name "*.flac" -o -name "*.ogg" -o -name "*.opus" -o -name "*.webm" \) -printf '%P\n' | \
     # Step 2: Pipe the output of 'find' to 'fzf'.
     fzf --layout=reverse --exact --prompt=" " --no-sort --margin=1% --gap=1 --multi --color="$COLOR_OPTS" --border --border=bold --border=rounded --border-label=" $LABEL " --highlight-line --pointer " " | \
     # Step 3: Pass the selected file(s) to 'xargs', which executes the 'mpv' command for each selection.
