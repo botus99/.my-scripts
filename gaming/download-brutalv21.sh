@@ -1,10 +1,30 @@
 #!/usr/bin/env bash
+#=============================================================================#
+# name:        download-brutalv21.sh
+# author:      botus99
+# updated    : 2026-05-05
+# description: downloads the latest brutal doom community wad (BLOODWOLF)
+#              download happens in current directory
+#=============================================================================#
 
-# Exit the script immediately if any command fails
+# exit script if anything craps out
 set -euo pipefail
 
 #=============================================================================#
-#                              ASCII HEADER (CENTERED)                        #
+#                                   CONFIG                                    #
+#=============================================================================#
+
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[1;33m"
+RESET="\033[0m"
+
+log()    { echo -e "${GREEN}[INFO]${RESET} $1"; }
+warn()   { echo -e "${YELLOW}[WARN]${RESET} $1"; }
+error()  { echo -e "${RED}[ERROR]${RESET} $1"; exit 1; }
+
+#=============================================================================#
+#                               CENTERED ASCII HEADER                         #
 #=============================================================================#
 
 print_centered() {
@@ -61,51 +81,93 @@ print_centered << "EOF"
  ╚═════╝  ╚═════╝  ╚═╝     ╚═╝ ╚═╝     ╚═╝  ╚═════╝  ╚═╝  ╚═══╝ ╚═╝    ╚═╝       ╚═╝   
 EOF
 
-# Download URL
+# download URL
 URL="https://github.com/BLOODWOLF333/Brutal-Doom-Community-Expansion/archive/refs/heads/master.zip"
 
-# Output filename
+# output filename
 FILENAME="brutalv21-latest.pk3"
 
-# Check network connectivity
+# check network connectivity
 if ! ping -c 1 github.com &> /dev/null; then
-    echo -e "\033[0;31mNo internet connection. \e[0mExiting."
-    exit 1
+    error "No internet connection. Exiting."
 fi
 
-# Download latest developer build
-if ! wget --no-verbose --progress=bar --show-progress --output-document="$FILENAME" "$URL"; then
-    echo -e "\033[0;31mDownload failed. \e[0mError: $?"
-    exit 1
-fi
+#=============================================================================#
+#                       CHECK FOR NEWER GITHUB COMMIT                         #
+#=============================================================================#
 
-# Check if download was successful
-if [ -f "$FILENAME" ]; then
-    echo "Latest devoloper version of Brutal Doom Community downloaded successfully."
+API_URL="https://api.github.com/repos/BLOODWOLF333/Brutal-Doom-Community-Expansion/commits/master"
+
+log "Checking for latest commit on GitHub..."
+
+# get latest commit ISO timestamp (e.g., 2024-01-01T12:34:56Z)
+LATEST_COMMIT_DATE=$(curl -s "$API_URL" | jq -r '.commit.committer.date' 2>/dev/null || true)
+
+if [ -z "$LATEST_COMMIT_DATE" ]; then
+    warn "Could not fetch latest commit info. Proceeding with download..."
 else
-    echo -e "\033[0;31mFile not found after download. \e[0mExiting."
-    exit 1
+    # convert to epoch time
+    REMOTE_EPOCH=$(date -d "$LATEST_COMMIT_DATE" +%s)
+
+    # compare dates of current installed version and lastest commit
+    if [ -f "$FILENAME" ]; then
+        LOCAL_EPOCH=$(stat -c %Y "$FILENAME")
+
+        if [ "$REMOTE_EPOCH" -le "$LOCAL_EPOCH" ]; then
+            log "Latest version already installed. Skipping download."
+            exit 0
+        else
+            log "Newer version detected. Proceeding with download..."
+        fi
+    else
+        log "No existing file found. Proceeding with download..."
+    fi
 fi
 
-# Extract pk3 file to temp directory
-echo "Extracting contents..."
-unzip -q "$FILENAME" -d temp_dir
+#=============================================================================#
+#                            DOWNLOAD AND INSTALL                             #
+#=============================================================================#
 
-# Navigate to root of extracted pk3
-echo "Changing directory structure..."
-cd temp_dir/Brutal-Doom-Community-Expansion-master
-rm -rf .github
+# download latest developer build
+if ! wget --no-verbose --progress=bar --show-progress --output-document="$FILENAME" "$URL"; then
+    error "Download failed. Error: $?"
+fi
 
-# Compress to pk3
-echo "Compressing modified contents..."
-zip -q -r -9 "../../Brutal-Doom-Community-Expansion-master.pk3" .
+# check if download was successful
+if [ -f "$FILENAME" ]; then
+    log "Latest devoloper version of Brutal Doom Community downloaded successfully."
+else
+    error "File not found after download. Exiting."
+fi
 
-# Clean up and finalize things
-cd ../..
-rm -rf temp_dir
-rm "$FILENAME"
-mv Brutal-Doom-Community-Expansion-master.pk3 "$FILENAME"
+#=============================================================================#
+# the lines below recompress the pk3 to...
+#  - remove unneeded directories
+#  - save some disk space (very little... this is Doom after all)
+#
+# this is totally unnessesary, a waste of time, and a waste of resources (IMO)
+# leaving here to preserve my stupid idea in case it is useful for someone else
+#=============================================================================#
 
-# Success message (commented out in favor of the script sourcing this script doing the echo)
-#echo "Operation completed successfully."
-#echo "Rip and tear!"
+# # extract pk3 file to temp directory
+# log "Extracting contents..."
+# unzip -q "$FILENAME" -d temp_dir
+
+# # navigate to root of extracted pk3
+# log "Changing directory structure..."
+# cd temp_dir/Brutal-Doom-Community-Expansion-master
+# rm -rf .github
+
+# # compress to pk3
+# log "Compressing modified contents..."
+# zip -q -r -9 "../../Brutal-Doom-Community-Expansion-master.pk3" .
+
+# # final cleanup
+# cd ../..
+# rm -rf temp_dir
+# rm "$FILENAME"
+# mv Brutal-Doom-Community-Expansion-master.pk3 "$FILENAME"
+
+# Success message (commented out in favor sourcing this script and doing success messages there)
+#log "Operation completed successfully."
+#log "Rip and tear!"
