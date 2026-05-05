@@ -19,14 +19,12 @@ PCSX2_DIR="$HOME/.config/PCSX2/bios"
 RYU_FIRMWARE_DIR="$HOME/.var/app/io.github.ryubing.Ryujinx/config/Ryujinx/firmware"
 RYU_KEYS_DIR="$HOME/.var/app/io.github.ryubing.Ryujinx/config/Ryujinx/system"
 
-# colors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
 BLUE="\033[1;34m"
 MAGENTA="\033[1;35m"
 CYAN="\033[1;36m"
-GRAY="\033[1;37m"
 RESET="\033[0m"
 
 log()   { echo -e "${GREEN}[INFO]${RESET} $1"; }
@@ -52,12 +50,12 @@ done
 #=============================================================================#
 
 download() {
-    local url="$1"
-    local dest="$2"
+    local URL="$1"
+    local DEST="$2"
 
-    mkdir -p "$dest"
+    mkdir -p "$DEST"
     wget --quiet --show-progress --progress=bar:force:noscroll \
-        --no-clobber -P "$dest" "$url"
+        --no-clobber -P "$DEST" "$URL"
 }
 
 #=============================================================================#
@@ -89,39 +87,39 @@ show_menu() {
 
 download_bios() {
     local console=$1
-    local fbneo="$RETROARCH_DIR/fbneo"
-    local dc="$RETROARCH_DIR/dc"
+    local FBNEO="$RETROARCH_DIR/fbneo"
+    local DC="$RETROARCH_DIR/dc"
     log "Cool. Here we go!"
     case "$console" in
         1)
             log "Installing Arcade BIOS files..."
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/airlbios.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/awbios.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/bubsys.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/cchip.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/decocass.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355bios.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355dlx.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/hod2bios.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/isgsm.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/midssio.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/naomi.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/neogeo.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/nmk004.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/pgm.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/skns.zip "$fbneo"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/ym2608.zip "$fbneo"
-            mkdir -p "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_boot.bin "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_flash.bin "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/naomi_boot.bin "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/airlbios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/awbios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355bios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355dlx.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/hod2bios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/naomi.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/naomi2.zip "$dc"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/airlbios.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/awbios.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/bubsys.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/cchip.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/decocass.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355bios.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355dlx.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/hod2bios.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/isgsm.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/midssio.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/naomi.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/neogeo.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/nmk004.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/pgm.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/skns.zip "$FBNEO"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/ym2608.zip "$FBNEO"
+            mkdir -p "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_boot.bin "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_flash.bin "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/naomi_boot.bin "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/airlbios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/awbios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355bios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/f355dlx.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/hod2bios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/naomi.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/naomi2.zip "$DC"
             log "Arcade BIOS files installed successfully."
             ;;
         2)
@@ -220,17 +218,17 @@ download_bios() {
             ;;
         7)
             log "Installing Sega Dreamcast BIOS files..."
-            mkdir -p "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_boot.bin "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_flash.bin "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/f355bios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/f355dlx.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/naomi.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/naomi_boot.bin "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/airlbios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/awbios.zip "$dc"
-            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/hod2bios.zip "$dc"
-            download https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/dc/naomi2.zip "$dc"
+            mkdir -p "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_boot.bin "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/dc_flash.bin "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/f355bios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/f355dlx.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/naomi.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Sega/Dreamcast/naomi_boot.bin "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/airlbios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/awbios.zip "$DC"
+            download https://github.com/Abdess/retrobios/raw/refs/heads/main/bios/Arcade/Arcade/hod2bios.zip "$DC"
+            download https://github.com/archtaurus/RetroPieBIOS/raw/master/BIOS/DC/naomi2.zip "$DC"
             log "Sega Dreamcast BIOS files installed successfully."
             ;;
         8)
