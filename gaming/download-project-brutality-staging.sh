@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
+#=============================================================================#
+# name:        download-brutal-doom-platinum.sh
+# author:      botus99
+# updated    : 2026-05-05
+# description: downloads the latest project brutality wad (PB_Staging)
+#              download happens in current directory
+#=============================================================================#
 
-# Exit the script immediately if any command fails
+# exit script if anything craps out
 set -euo pipefail
 
 #=============================================================================#
@@ -17,7 +24,7 @@ warn()   { echo -e "${YELLOW}[WARN]${RESET} $1"; }
 error()  { echo -e "${RED}[ERROR]${RESET} $1"; exit 1; }
 
 #=============================================================================#
-#                              ASCII HEADER (CENTERED)                        #
+#                               CENTERED ASCII HEADER                         #
 #=============================================================================#
 
 print_centered() {
@@ -37,13 +44,6 @@ print_centered() {
 }
 
 print_centered << "EOF"
-             ██████╗  ██████╗  ██╗   ██╗ ████████╗  █████╗  ██╗                
-             ██╔══██╗ ██╔══██╗ ██║   ██║ ╚══██╔══╝ ██╔══██╗ ██║                
-             ██████╔╝ ██████╔╝ ██║   ██║    ██║    ███████║ ██║                
-             ██╔══██╗ ██╔══██╗ ██║   ██║    ██║    ██╔══██║ ██║                
-             ██████╔╝ ██║  ██║ ╚██████╔╝    ██║    ██║  ██║ ███████╗           
-             ╚═════╝  ╚═╝  ╚═╝  ╚═════╝     ╚═╝    ╚═╝  ╚═╝ ╚══════╝           
-
     ▓   ▓ ▓▓▓        ▓  ▓ ▓▓▓  ▓        ▓      ▓ ▓░   ░░▓  ▓▓    ▓  ▓▓         
   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ░▓▓▓░▓▓▓▓▓▓▓▓░▓▒ ░░▓▓▓▓░▓▓▓▓░▓▓▓▓▓▓▓▓░▓▓▓▓░   ▓▓▓▓▓▓▓▓  
     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░▓▓▓▓▓▓▓  ▓▓▓▓▓░▓▓  
@@ -84,48 +84,92 @@ EOF
 
 
 
-# Download URL
+# download URL
 URL="https://github.com/pa1nki113r/Project_Brutality/archive/refs/heads/PB_Staging.zip"
 
-# Output filename
+# output filename
 FILENAME="project-brutality-staging.pk3"
 
-# Check network connectivity
+# check network connectivity
 if ! ping -c 1 github.com &> /dev/null; then
     error "No internet connection. Exiting."
 fi
 
-# Download current staging build
+#=============================================================================#
+#                       CHECK FOR NEWER GITHUB COMMIT                         #
+#=============================================================================#
+
+API_URL="https://api.github.com/repos/pa1nki113r/Project_Brutality/commits/PB_Staging"
+
+log "Checking for latest commit on GitHub..."
+
+# get latest commit ISO timestamp (e.g., 2024-01-01T12:34:56Z)
+LATEST_COMMIT_DATE=$(curl -s "$API_URL" | jq -r '.commit.committer.date' 2>/dev/null || true)
+
+if [ -z "$LATEST_COMMIT_DATE" ]; then
+    warn "Could not fetch latest commit info. Proceeding with download..."
+else
+    # convert to epoch time
+    REMOTE_EPOCH=$(date -d "$LATEST_COMMIT_DATE" +%s)
+
+    if [ -f "$FILENAME" ]; then
+        LOCAL_EPOCH=$(stat -c %Y "$FILENAME")
+
+        if [ "$REMOTE_EPOCH" -le "$LOCAL_EPOCH" ]; then
+            log "Latest version already installed. Skipping download."
+            exit 0
+        else
+            log "Newer version detected. Proceeding with download..."
+        fi
+    else
+        log "No existing file found. Proceeding with download..."
+    fi
+fi
+
+#=============================================================================#
+#                            DOWNLOAD AND INSTALL                             #
+#=============================================================================#
+
+# download current staging build
 if ! wget --no-verbose --progress=bar --show-progress --output-document="$FILENAME" "$URL"; then
     error "Download failed. Error: $?"
 fi
 
-# Check if download was successful
+# check if download was successful
 if [ -f "$FILENAME" ]; then
     log "Latest staging version of Project Brutality downloaded successfully."
 else
     error "File not found after download. Exiting."
 fi
 
-# Extract pk3 file to temp directory
-log "Extracting contents..."
-unzip -q "$FILENAME" -d temp_dir
+#=============================================================================#
+# the lines below recompress the pk3 to...
+#  - remove unneeded directories
+#  - save some disk space (very little... this is Doom after all)
+#
+# this is totally unnessesary, a waste of time, and a waste of resources (IMO)
+# leaving here to preserve my stupid idea in case it is useful for someone else
+#=============================================================================#
 
-# Navigate to root of extracted pk3
-log "Changing directory structure..."
-cd temp_dir/Project_Brutality-PB_Staging
-rm -rf .github
+# # extract pk3 file to temp directory
+# log "Extracting contents..."
+# unzip -q "$FILENAME" -d temp_dir
 
-# Compress to pk3
-log "Compressing modified contents..."
-zip -q -r -9 "../../project-brutality-staging_modified.pk3" .
+# # navigate to root of extracted pk3
+# log "Changing directory structure..."
+# cd temp_dir/Project_Brutality-PB_Staging
+# rm -rf .github
 
-# Clean up and finalize things
-cd ../..
-rm -rf temp_dir
-rm "$FILENAME"
-mv project-brutality-staging_modified.pk3 "$FILENAME"
+# # compress to pk3
+# log "Compressing modified contents..."
+# zip -q -r -9 "../../project-brutality-staging_modified.pk3" .
 
-# Success message (commented out in favor of the script sourcing this script doing the echo)
-#echo "Operation completed successfully."
-#echo "Rip and tear!"
+# # final cleanup
+# cd ../..
+# rm -rf temp_dir
+# rm "$FILENAME"
+# mv project-brutality-staging_modified.pk3 "$FILENAME"
+
+# Success message (commented out in favor sourcing this script and doing success messages there)
+#log "Operation completed successfully."
+#log "Rip and tear!"
