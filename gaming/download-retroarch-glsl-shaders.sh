@@ -3,7 +3,7 @@
 # name:        download-duimon-shaders.sh
 # author:      botus99
 # messed with: 2026-04-19
-# description: downloads and installs the latest duimon shaders
+# description: downloads and installs the latest glsl shaders
 #              for retroarch (flatpak) on Linux. adjust BASE_DIR in the 
 #              config below to change this. this script updates old
 #              versions too, so it is safe to re-run anytime
@@ -17,9 +17,9 @@ set -euo pipefail
 #=============================================================================#
 
 BASE_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch/shaders"
-TARGET_DIR="$BASE_DIR/Mega_Bezel_Packs"
-REPO_DIR="$TARGET_DIR/Duimon-Mega-Bezel"
-REPO_URL="https://github.com/Duimon/Duimon-Mega-Bezel"
+TARGET_DIR="$BASE_DIR/shaders_glsl"
+REPO_DIR="$TARGET_DIR/glsl-shaders"
+REPO_URL="https://github.com/libretro/glsl-shaders"
 
 RED="\033[0;31m"
 GREEN="\033[0;32m"
@@ -46,7 +46,7 @@ mkdir -p "$TARGET_DIR"
 #=============================================================================#
 
 if [ ! -d "$REPO_DIR" ]; then
-    log "Cloning Duimon Mega Bezel shaders..."
+    log "Cloning RetroArch GLSL shaders..."
     git clone "$REPO_URL" "$REPO_DIR"
 else
     log "Updating existing shaders..."
@@ -57,4 +57,4 @@ fi
 #                                   DONE                                      #
 #=============================================================================#
 
-log "Duimon shaders are installed and up to date!"
+log "RetroArch GLSL shaders are installed and up to date!"

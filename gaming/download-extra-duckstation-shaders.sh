@@ -19,7 +19,6 @@ DUCK_DIR="$HOME/.local/share/duckstation/shaders"
 ZIP_FILE="$DUCK_DIR/emu-shaders.zip"
 EXTRACT_DIR="$DUCK_DIR/emu-shaders-master"
 
-# colors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"

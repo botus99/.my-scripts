@@ -22,7 +22,6 @@ ZIP_FILE="$BASE_DIR/Retro-Crisis-GDV-NTSC-latest.zip"
 # cleanup on exit (success or failure)
 trap 'rm -f "$ZIP_FILE"' EXIT
 
-# colors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"

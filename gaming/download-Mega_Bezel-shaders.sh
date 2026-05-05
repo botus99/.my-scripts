@@ -21,7 +21,6 @@ OLD_DIR="$DEST_DIR/Mega_Bezel"
 ZIP_FILE="$SHADER_DIR/Mega_Bezel-latest.zip"
 API_URL="https://api.github.com/repos/HyperspaceMadness/Mega_Bezel/releases/latest"
 
-# colors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
