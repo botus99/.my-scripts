@@ -2,12 +2,13 @@
 #=============================================================================#
 # name:        update-wads.sh
 # author:      botus99
-# messed with: 2026-04-19
+# messed with: 2026-05-05
 # description: script to download the newest versions of my favorite doom wads
 #              scripts in SCRIPT_PATH are needed, note the SCRIPT_PATH location
 #
-# note:        if you do not have a DOOMWADDIR set up, it would probably be
-#              better in your bashrc, profile, /etc/environment, or similar
+# note:        if you do not have a DOOMWADDIR set up, it would be better in...
+#               - `~/.profile` (my reccommendation)
+#               - `/etc/environment`
 #=============================================================================#
 
 # exit script if anything craps out
@@ -17,7 +18,6 @@ set -euo pipefail
 #                                   CONFIG                                    #
 #=============================================================================#
 
-# colors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
 YELLOW="\033[1;33m"
@@ -33,7 +33,7 @@ error() { echo -e "${RED}[ERROR]${RESET} $1"; exit 1; }
 
 separator() {
     local COLS
-    COLS=$(tput COLS 2>/dev/null || echo "${COLUMNS:-80}")
+    COLS=$(tput cols 2>/dev/null || echo "${COLUMNS:-80}")
     printf "${YELLOW}%*s${RESET}\n" "$COLS" '' | tr ' ' '='
 }
 
@@ -60,7 +60,6 @@ main() {
         local WAD_PATH="$DOOMWADDIR/$WAD"
         local SCRIPT_PATH="$HOME/.my-scripts/gaming/download-${WAD}.sh"
 
-        separator
         log "Processing: $WAD"
 
         # validate wad directory
@@ -88,10 +87,10 @@ main() {
         }
 
         log "$WAD is ready. Go kill some imps 👿"
+        separator
     done
 
-    separator
-    log "All WADs/PK3s successfully installed."
+    log "All WADs/PK3s installed and up to date."
     log "RIP AND TEAR 🔫"
 }
 
