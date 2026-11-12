@@ -16,7 +16,7 @@ set -euo pipefail
 #=============================================================================#
 
 BASE_DIR="$HOME/.var/app/org.libretro.RetroArch/config/retroarch"
-OLD_DIR="$BASE_DIR/shaders/shaders_slang/retro crisis"
+OLD_DIR="$BASE_DIR/shaders/Mega_Bezel_Packs/retro crisis"
 ZIP_FILE="$BASE_DIR/Retro-Crisis-GDV-NTSC-latest.zip"
 
 # cleanup on exit (success or failure)
@@ -72,10 +72,12 @@ if [ -d "$OLD_DIR" ]; then
 fi
 
 log "Extracting shaders..."
-# keep that macOS junk off of my system
-unzip -oq "$ZIP_FILE" -d "$BASE_DIR" -x "__MACOSX/*" "*.DS_Store"
+
+# remove macOS junk
+unzip -oq "$ZIP_FILE" -d "$BASE_DIR/shaders/Mega_Bezel_Packs" -x "__MACOSX/*" "*.DS_Store"
 
 log "Cleaning up..."
+
 # technically unnecessary because of the trap setup earlier in the script.
 # leaving here for clarity/posterity/in case of removal of trap for some reason
 rm -f "$ZIP_FILE"
