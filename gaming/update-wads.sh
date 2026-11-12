@@ -56,42 +56,61 @@ main() {
         "project-brutality-staging"
     )
 
+    local TOTAL=${#WAD_DIRS[@]}
+    local SUCCEEDED=0
+    local FAILED=()
+
     for WAD in "${WAD_DIRS[@]}"; do
         local WAD_PATH="$DOOMWADDIR/$WAD"
         local SCRIPT_PATH="$HOME/.my-scripts/gaming/download-${WAD}.sh"
+        local RC=0
 
         log "Processing: $WAD"
 
         # validate wad directory
         if [[ ! -d "$WAD_PATH" ]]; then
             warn "Directory not found: $WAD_PATH (skipping)"
+            FAILED+=("$WAD (directory missing)")
             continue
         fi
 
         # validate script
         if [[ ! -f "$SCRIPT_PATH" ]]; then
             warn "Download script missing: $SCRIPT_PATH (skipping)"
+            FAILED+=("$WAD (script missing)")
             continue
         fi
 
         log "Using directory: $WAD_PATH"
         log "Executing: $(basename "$SCRIPT_PATH")"
 
-        # run script in subshell to avoid cd pollution
+        # run script in subshell to avoid cd pollution, and capture the
+        # exit status without tripping set -e
         (
             cd "$WAD_PATH" || exit 1
             bash "$SCRIPT_PATH"
-        ) || {
-            warn "Execution failed for $WAD"
-            continue
-        }
+        ) || RC=$?
 
-        log "$WAD is ready. Go kill some imps 👿"
+        if (( RC == 0 )); then
+            log "$WAD is ready. Go kill some imps 👿"
+            (( ++SUCCEEDED ))
+        else
+            warn "Execution failed for $WAD (exit $RC)"
+            FAILED+=("$WAD (exit $RC)")
+        fi
+
         separator
     done
 
-    log "All WADs/PK3s installed and up to date."
-    log "RIP AND TEAR 🔫"
+    # report results and fail loudly if anything did not update
+    if (( ${#FAILED[@]} == 0 )); then
+        log "All WADs/PK3s installed and up to date."
+        log "RIP AND TEAR 🔫"
+    else
+        warn "Failed WADs:"
+        printf '  - %s\n' "${FAILED[@]}"
+        error "${#FAILED[@]} of ${TOTAL} WADs did not update (${SUCCEEDED} succeeded)"
+    fi
 }
 
 main
